@@ -1,7 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"net"
+	"os"
+	"strconv"
+	"strings"
 )
 
 const (
@@ -16,4 +21,34 @@ const (
 // not you add any code to this file will not affect your grade.
 func main() {
 	fmt.Println("Not implemented.")
+	conn, err := net.Dial("tcp", defaultHost+":"+strconv.Itoa(defaultPort))
+	if err != nil {
+		fmt.Println("error dialing...", err)
+		return
+	}
+	inputReader := bufio.NewReader(os.Stdin)
+	go read(conn)
+	for {
+		fmt.Println("What to send to the server? Type Q to quit.")
+		input, _ := inputReader.ReadString('\n')
+		trimmedInput := strings.Trim(input, "\n")
+		if trimmedInput == "Q" {
+			return
+		}
+		_, err = conn.Write([]byte(input))
+	}
+
+}
+func read(conn net.Conn) {
+	for {
+		buf := make([]byte, 512)
+		len, err := conn.Read(buf)
+		if err != nil {
+			fmt.Println("Error reading...", err.Error())
+			//delete
+
+			return
+		}
+		fmt.Printf("Received data: %v", string(buf[:len]))
+	}
 }

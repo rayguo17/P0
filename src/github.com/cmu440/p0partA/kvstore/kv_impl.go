@@ -23,7 +23,7 @@ func (im impl) Put(key string, value []byte) {
 }
 
 // Get fetches the value associated with the key
-func (im impl) Get(key string) []([]byte) {
+func (im impl) Get(key string) [][]byte {
 	valueList := im.internal[key]
 	return valueList
 }

@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/cmu440/p0partA"
 	"github.com/cmu440/p0partA/kvstore"
+	"github.com/k0kubun/pp/v3"
+	"os"
 )
 
 const defaultPort = 9999
@@ -25,7 +28,19 @@ func main() {
 	}
 
 	fmt.Printf("Started KeyValueServer on port %d...\n", defaultPort)
+	inputReader := bufio.NewReader(os.Stdin)
+	for {
+		str, _ := inputReader.ReadString('\n')
+		switch str {
+		case "1\n":
+			pp.Println(store)
+		case "2\n":
+			pp.Println(server)
+		case "3\n":
+			server.Close()
+			return
+		}
 
+	}
 	// Block forever.
-	select {}
 }

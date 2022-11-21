@@ -681,7 +681,7 @@ func testCount(t *testing.T, name string, timeout int, max int, events ...*count
 }
 
 func TestBasic1(t *testing.T) {
-	testBasic(t, "TestBasic1", 1, 100, 10, 5000)
+	testBasic(t, "TestBasic1", 1, 100, 10, 10000000)
 }
 
 func TestBasic2(t *testing.T) {
